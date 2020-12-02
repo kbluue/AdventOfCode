@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Day1 implements Day {
 
     private int[] getNumbers() {
-        final ArrayList<Integer> inputs = readInput();
+        final ArrayList<Integer> inputs = readInts(INPUT);
         for (int i = 0; i < inputs.size() - 1; i++) {
             for (int j = i + 1; j < inputs.size(); j++) {
                 if (inputs.get(i) + inputs.get(j) == 2020) {
@@ -18,7 +18,7 @@ public class Day1 implements Day {
     }
 
     private int[] get3Numbers() {
-        final ArrayList<Integer> inputs = readInput();
+        final ArrayList<Integer> inputs = readInts(INPUT);
         for (int i = 0; i < inputs.size() - 2; i++) {
             for (int j = i + 1; j < inputs.size() - 1; j++) {
                 for (int k = j + 1; k < inputs.size(); k++) {

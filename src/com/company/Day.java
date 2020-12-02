@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 public interface Day {
 
+    String TEST = "test";
+    String INPUT = "input";
+
     int getDay();
 
     Integer getTask1Solution();
@@ -21,23 +24,28 @@ public interface Day {
     }
 
     private Object nullWrap(Integer solution) {
-        return solution == null ? "Result not ready yet" : getTask1Solution();
+        return solution == null ? "Result not ready yet" : solution;
     }
 
-    default ArrayList<Integer> readInput(){
-        return readFile("input");
-    }
-
-    default ArrayList<Integer> readTest(){
-        return readFile("test");
-    }
-
-    private ArrayList<Integer> readFile(String directory) {
+    default ArrayList<Integer> readInts(String directory) {
         var input = new ArrayList<Integer>();
         try {
             var scanner = new Scanner(new File(String.format("src/res/%s/day%s", directory, getDay())));
             while (scanner.hasNext()) {
                 input.add(scanner.nextInt());
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Kindly add input file and name appropriately");
+        }
+        return input;
+    }
+
+    default ArrayList<String> readLines(String directory) {
+        var input = new ArrayList<String>();
+        try {
+            var scanner = new Scanner(new File(String.format("src/res/%s/day%s", directory, getDay())));
+            while (scanner.hasNext()) {
+                input.add(scanner.nextLine());
             }
         } catch (FileNotFoundException e) {
             System.err.println("Kindly add input file and name appropriately");
