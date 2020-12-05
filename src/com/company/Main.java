@@ -5,6 +5,6 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        new Day4().printSolutions();
+        new Day5().printSolutions();
     }
 }
