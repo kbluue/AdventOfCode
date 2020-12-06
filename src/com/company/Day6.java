@@ -2,6 +2,11 @@ package com.company;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.*;
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 public class Day6 implements Day {
 
     class Group {
@@ -14,8 +19,18 @@ public class Day6 implements Day {
         }
 
         int getYes() {
-            return Math.toIntExact(answers.chars()
+            return toIntExact(answers.chars()
                     .distinct()
+                    .count());
+        }
+
+        int getSameYes() {
+            return toIntExact(answers.chars()
+                    .boxed()
+                    .collect(groupingBy(identity(), counting()))
+                    .values()
+                    .stream()
+                    .filter(aLong -> people == aLong)
                     .count());
         }
     }
@@ -27,16 +42,7 @@ public class Day6 implements Day {
 
     @Override
     public Integer getTask1Solution() {
-        var groups = new ArrayList<Group>();
-        groups.add(new Group());
-        readLines(TEST)
-                .forEach(line -> {
-                    if (line.isBlank()) {
-                        groups.add(new Group());
-                    } else {
-                        groups.get(groups.size() - 1).build(line);
-                    }
-                });
+        var groups = getGroups(INPUT);
         return groups.stream()
                 .mapToInt(Group::getYes)
                 .sum();
@@ -44,6 +50,23 @@ public class Day6 implements Day {
 
     @Override
     public Integer getTask2Solution() {
-        return null;
+        var groups = getGroups(INPUT);
+        return groups.stream()
+                .mapToInt(Group::getSameYes)
+                .sum();
+    }
+
+    public ArrayList<Group> getGroups(String input) {
+        var groups = new ArrayList<Group>();
+        groups.add(new Group());
+        readLines(input)
+                .forEach(line -> {
+                    if (line.isBlank()) {
+                        groups.add(new Group());
+                    } else {
+                        groups.get(groups.size() - 1).build(line);
+                    }
+                });
+        return groups;
     }
 }
